@@ -1,0 +1,40 @@
+{
+    "AWSEBDockerVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "frontend",
+            "image": "i11f2jz8e7/multi-container-example-frontend",
+            "hostname": "client",
+            "essential": false,
+            "memory": 128
+        },
+        {
+            "name": "backend",
+            "image": "i11f2jz8e7/multi-container-example-backend",
+            "hostname": "api",
+            "essential": false,
+            "memory": 128
+        },
+        {
+            "name": "worker",
+            "image": "i11f2jz8e7/multi-container-example-worker",
+            "hostname": "worker",
+            "essential": false,
+            "memory": 128
+        },
+        {
+            "name": "nginx",
+            "image": "i11f2jz8e7/multi-container-example-nginx",
+            "hostname": "nginx",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["frontend", "server"],
+            "memory": 128
+        }
+    ]
+}
