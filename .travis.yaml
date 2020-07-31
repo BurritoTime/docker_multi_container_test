@@ -1,0 +1,17 @@
+sudo: required
+services:
+    - docker
+before_install:
+    - docker build -t i11f2jz8e7/react-frontend-test -f ./client/Dockerfile.dev ./client
+script:
+    - docker run i11f2jz8e7/react-frontend-test npm test -- --coverage
+after_success:
+    - docker build -t i11f2jz8e7/multi-container-example-frontend ./client
+    - docker build -t i11f2jz8e7/multi-container-example-nginx ./nginx
+    - docker build -t i11f2jz8e7/multi-container-example-backend ./server
+    - docker build -t i11f2jz8e7/multi-container-example-worker ./worker
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push i11f2jz8e7/multi-container-example-frontend
+    - docker push i11f2jz8e7/multi-container-example-nginx
+    - docker push i11f2jz8e7/multi-container-example-backend
+    - docker push i11f2jz8e7/multi-container-example-worker
