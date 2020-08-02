@@ -15,3 +15,15 @@ after_success:
     - docker push i11f2jz8e7/multi-container-example-nginx
     - docker push i11f2jz8e7/multi-container-example-backend
     - docker push i11f2jz8e7/multi-container-example-worker
+deploy:
+    edge: true
+    provider: elasticbeanstalk
+    region: us-west-1
+    app: multi-container-example
+    env: MultiContainerExample-env
+    bucket_name: elasticbeanstalk-us-west-1-052708076507
+    bucket_path: multi-container-example
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
